@@ -22,7 +22,7 @@ class Response < ActiveRecord::Base
   def sibling_responses
     #return nil if self.id.nil?
     self.question.responses
-      .where('"responses".id != ?', self.id).where.not(self.id: "NULL")
+      .where("(:id IS NULL) OR (responses.id != :id)", id: self.id)
   end
 
 end
